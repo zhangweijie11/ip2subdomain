@@ -4,7 +4,10 @@ import (
 	"fmt"
 	"github.com/forease/gotld"
 	"ip2subdomain/dnsgrep"
+	"ip2subdomain/ip138"
+	"ip2subdomain/rapiddns"
 	"ip2subdomain/utils"
+	"ip2subdomain/webscan"
 )
 
 type SubdomainInfo struct {
@@ -20,6 +23,24 @@ func GetSubdomain(ip string) []SubdomainInfo {
 		if source == utils.SourceDnsgrep {
 			dnsGrewpSubdomains := dnsgrep.GetSubdomain(ip)
 			for _, subdomain := range dnsGrewpSubdomains {
+				allSubdomain = append(allSubdomain, subdomain)
+			}
+		}
+		if source == utils.SourceIp138 {
+			ip138Subdomains := ip138.GetSubdomain(ip)
+			for _, subdomain := range ip138Subdomains {
+				allSubdomain = append(allSubdomain, subdomain)
+			}
+		}
+		if source == utils.SourceRapiddns {
+			rapiddnsSubdomains := rapiddns.GetSubdomain(ip)
+			for _, subdomain := range rapiddnsSubdomains {
+				allSubdomain = append(allSubdomain, subdomain)
+			}
+		}
+		if source == utils.SourceWebscan {
+			webscanSubdomains := webscan.GetSubdomain(ip)
+			for _, subdomain := range webscanSubdomains {
 				allSubdomain = append(allSubdomain, subdomain)
 			}
 		}
